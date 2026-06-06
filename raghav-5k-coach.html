@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raghav's 5K Coach - 4 Week Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e74c3c;
+            --secondary: #3498db;
+            --accent: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --muted: #95a5a6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #c0392b 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--light);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: var(--muted);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-button:hover {
+            color: var(--dark);
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .week-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .week-card.completed {
+            border-left-color: var(--success);
+            background: linear-gradient(to right, rgba(39, 174, 96, 0.05), white);
+        }
+
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .week-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .week-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .week-goal {
+            color: var(--muted);
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .workouts-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .workout-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.95em;
+        }
+
+        .workout-item strong {
+            color: var(--primary);
+        }
+
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="date"]:focus,
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .rating-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .rating-btn {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 1em;
+        }
+
+        .rating-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .rating-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        button.btn {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button.btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        button.btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #2980b9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .runs-log {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .run-entry {
+            padding: 20px;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 15px;
+        }
+
+        .run-entry:last-child {
+            border-bottom: none;
+        }
+
+        .run-info {
+            flex: 1;
+        }
+
+        .run-date {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .run-details {
+            font-size: 0.9em;
+            color: var(--muted);
+            margin: 5px 0;
+        }
+
+        .run-notes {
+            font-size: 0.9em;
+            color: var(--dark);
+            margin-top: 8px;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .no-data {
+            padding: 40px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #1a5276;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .week-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏃 Raghav's 5K Coach</h1>
+            <p>4-week adaptive training plan • Your progress drives the plan forward</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('plan')">📋 Training Plan</button>
+            <button class="tab-button" onclick="switchTab('log')">📝 Run Logger</button>
+            <button class="tab-button" onclick="switchTab('check-in')">✓ Weekly Check-In</button>
+            <button class="tab-button" onclick="switchTab('progress')">📊 Progress</button>
+        </div>
+
+        <!-- TRAINING PLAN TAB -->
+        <div id="plan" class="tab-content active">
+            <div class="info-box">
+                <strong>How this works:</strong> Each week builds on the last. Complete your runs as prescribed, then do a weekly check-in to tell us how you're doing. If you're crushing it, we'll adjust future weeks to challenge you more. If it's tough, we'll scale back slightly.
+            </div>
+            <div id="plan-container"></div>
+        </div>
+
+        <!-- RUN LOGGER TAB -->
+        <div id="log" class="tab-content">
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">Log a Run</h2>
+                <form id="runForm">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="runDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Workout Type</label>
+                        <select id="runType" required>
+                            <option value="">Select type...</option>
+                            <option value="Easy run">Easy run</option>
+                            <option value="Walk/run intervals">Walk/run intervals</option>
+                            <option value="Tempo">Tempo</option>
+                            <option value="Long run">Long run</option>
+                            <option value="Cross-training">Cross-training</option>
+                            <option value="Rest day">Rest day</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration (minutes)</label>
+                        <input type="number" id="runDuration" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>How did you feel? (1 = struggled, 5 = felt great)</label>
+                        <div class="rating-group">
+                            <button type="button" class="rating-btn" onclick="setRating(1)">1</button>
+                            <button type="button" class="rating-btn" onclick="setRating(2)">2</button>
+                            <button type="button" class="rating-btn" onclick="setRating(3)">3</button>
+                            <button type="button" class="rating-btn" onclick="setRating(4)">4</button>
+                            <button type="button" class="rating-btn" onclick="setRating(5)">5</button>
+                        </div>
+                        <input type="hidden" id="runFeeling">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notes (optional)</label>
+                        <textarea id="runNotes" placeholder="How did the run go? Any aches? Weather? Mood?"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Log This Run</button>
+                </form>
+            </div>
+
+            <h2 style="margin-top: 40px; margin-bottom: 20px;">Your Recent Runs</h2>
+            <div id="runsLog" class="runs-log">
+                <div class="no-data">No runs logged yet. Get started! 🏃</div>
+            </div>
+        </div>
+
+        <!-- WEEKLY CHECK-IN TAB -->
+        <div id="check-in" class="tab-content">
+            <div class="form-section">
+                <h2 style="margin-bottom: 10px;">Weekly Check-In</h2>
+                <p style="color: var(--muted); margin-bottom: 20px;">Help us understand how you're progressing so we can adjust your plan for next week.</p>
+
+                <form id="checkInForm">
+                    <div class="form-group">
+                        <label>Which week are you finishing?</label>
+                        <select id="checkInWeek" required>
+                            <option value="">Select week...</option>
+                            <option value="1">Week 1</option>
+                            <option value="2">Week 2</option>
+                            <option value="3">Week 3</option>
+                            <option value="4">Week 4</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Did you complete all scheduled runs this week?</label>
+                        <div style="margin-top: 10px;">
+                            <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; font-weight: 400;">
+                                <input type="radio" name="completionRate" value="yes" required> &nbsp; Yes, completed all
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; font-weight: 400;">
+                                <input type="radio" name="completionRate" value="mostly"> &nbsp; Mostly (missed 1)
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; font-weight: 400;">
+                                <input type="radio" name="completionRate" value="some"> &nbsp; Some (missed 2+)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Overall difficulty this week? (1 = too easy, 5 = too hard)</label>
+                        <div class="rating-group">
+                            <button type="button" class="rating-btn" onclick="setCheckInDifficulty(1)">1</button>
+                            <button type="button" class="rating-btn" onclick="setCheckInDifficulty(2)">2</button>
+                            <button type="button" class="rating-btn" onclick="setCheckInDifficulty(3)">3</button>
+                            <button type="button" class="rating-btn" onclick="setCheckInDifficulty(4)">4</button>
+                            <button type="button" class="rating-btn" onclick="setCheckInDifficulty(5)">5</button>
+                        </div>
+                        <input type="hidden" id="checkInDifficulty">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Any injuries or issues?</label>
+                        <textarea id="checkInIssues" placeholder="Tell us about any aches, pains, or concerns..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>How are you feeling about your progress?</label>
+                        <textarea id="checkInFeedback" placeholder="Excited? Concerned? Surprised? Let us know..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Submit Check-In & Update Plan</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- PROGRESS TAB -->
+        <div id="progress" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Runs Completed</div>
+                    <div class="stat-value" id="totalRuns">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Time</div>
+                    <div class="stat-value" id="totalTime">0h</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg Feeling</div>
+                    <div class="stat-value" id="avgFeeling">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Current Week</div>
+                    <div class="stat-value" id="currentWeek">1</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Your Run Breakdown</h3>
+                <div id="progressDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR PLAN ADJUSTMENT -->
+    <div id="adjustmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Plan Adjusted! 🎯</div>
+            <div id="adjustmentMessage"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="closeModal()" style="flex: 1;">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initial state
+        let appState = {
+            runs: [],
+            checkIns: [],
+            currentWeek: 1,
+            trainingPlan: {}
+        };
+
+        // Load from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('raghavRunApp');
+            if (saved) {
+                appState = JSON.parse(saved);
+            }
+            initializePlan();
+        }
+
+        function saveState() {
+            localStorage.setItem('raghavRunApp', JSON.stringify(appState));
+        }
+
+        // Generate adaptive training plan
+        function initializePlan() {
+            // Base plan structure
+            const basePlan = {
+                1: {
+                    title: "Build the Foundation",
+                    goal: "Get comfortable with running rhythm. Focus on consistency, not speed.",
+                    workouts: [
+                        { day: "Mon", type: "Walk/run intervals", details: "3x (3 min run + 2 min walk). Total: ~15 min" },
+                        { day: "Wed", type: "Walk/run intervals", details: "3x (4 min run + 2 min walk). Total: ~18 min" },
+                        { day: "Fri", type: "Easy walk", details: "20-25 min easy walking or very easy running" },
+                        { day: "Sun", type: "Rest or cross-train", details: "Rest, stretching, or gentle yoga" }
+                    ]
+                },
+                2: {
+                    title: "Extend Your Running Segments",
+                    goal: "Gradually shift from intervals toward longer continuous efforts.",
+                    workouts: [
+                        { day: "Mon", type: "Walk/run intervals", details: "4x (4 min run + 1.5 min walk). Total: ~22 min" },
+                        { day: "Wed", type: "Walk/run intervals", details: "3x (6 min run + 2 min walk). Total: ~24 min" },
+                        { day: "Fri", type: "Easy run", details: "12-15 min easy running (can walk if needed)" },
+                        { day: "Sun", type: "Rest or cross-train", details: "Rest, stretching, or easy activity" }
+                    ]
+                },
+                3: {
+                    title: "Longer Continuous Efforts",
+                    goal: "Build toward sustained running. You're getting close to 5K!",
+                    workouts: [
+                        { day: "Mon", type: "Easy run", details: "20-22 min easy continuous" },
+                        { day: "Wed", type: "Tempo intervals", details: "2x (8 min tempo + 2 min easy). Total: ~20 min" },
+                        { day: "Fri", type: "Easy run", details: "15 min easy" },
+                        { day: "Sun", type: "Long run", details: "25-28 min easy—this is your longest!" }
+                    ]
+                },
+                4: {
+                    title: "5K Race Prep & Confidence",
+                    goal: "You're ready. Nail the 5K with pacing and mental toughness.",
+                    workouts: [
+                        { day: "Mon", type: "Easy run", details: "20 min easy recovery" },
+                        { day: "Wed", type: "5K simulation", details: "Warm up 5 min easy, then 5K pace effort (20-23 min), cool down 3 min easy" },
+                        { day: "Fri", type: "Easy run", details: "12-15 min easy" },
+                        { day: "Sun", type: "Race Day", details: "Run your 5K! Start steady, finish strong. You've got this! 🏁" }
+                    ]
+                }
+            };
+
+            // Check if plan needs adjustment based on check-ins
+            if (appState.checkIns.length > 0) {
+                const adjustments = calculateAdjustments();
+                if (adjustments.modified) {
+                    applyAdjustments(basePlan, adjustments);
+                }
+            }
+
+            appState.trainingPlan = basePlan;
+        }
+
+        function calculateAdjustments() {
+            const checkIns = appState.checkIns;
+            if (checkIns.length === 0) return { modified: false };
+
+            const latestCheckIn = checkIns[checkIns.length - 1];
+            const difficulty = latestCheckIn.difficulty;
+            const completion = latestCheckIn.completionRate;
+
+            let adjustment = { modified: false, reason: "", scaleFactor: 1 };
+
+            // If doing well and completed all runs
+            if (completion === 'yes' && difficulty <= 2) {
+                adjustment = {
+                    modified: true,
+                    reason: "You're crushing it! We've ramped up slightly.",
+                    scaleFactor: 1.1
+                };
+            }
+            // If struggled but still tried
+            else if (difficulty >= 4 || completion === 'some') {
+                adjustment = {
+                    modified: true,
+                    reason: "We're scaling back slightly to keep you healthy and motivated.",
+                    scaleFactor: 0.9
+                };
+            }
+
+            return adjustment;
+        }
+
+        function applyAdjustments(plan, adjustments) {
+            // Scale future weeks' duration/intensity
+            const currentWeek = appState.currentWeek;
+            for (let w = currentWeek + 1; w <= 4; w++) {
+                if (plan[w]) {
+                    // Modify workout details subtly based on scale factor
+                    // This is a simplified version—you could make it more sophisticated
+                    plan[w]._adjustment = adjustments;
+                }
+            }
+        }
+
+        function renderPlan() {
+            const container = document.getElementById('plan-container');
+            container.innerHTML = '';
+
+            for (let week = 1; week <= 4; week++) {
+                const weekPlan = appState.trainingPlan[week];
+                if (!weekPlan) continue;
+
+                const isCompleted = appState.checkIns.some(c => c.week == week);
+                const card = document.createElement('div');
+                card.className = `week-card ${isCompleted ? 'completed' : ''}`;
+
+                let weekHTML = `
+                    <div class="week-header">
+                        <div>
+                            <div class="week-title">Week ${week}: ${weekPlan.title}</div>
+                            <div class="week-goal">${weekPlan.goal}</div>
+                        </div>
+                        ${isCompleted ? '<div class="week-badge" style="background: var(--success);">✓ Completed</div>' : ''}
+                    </div>
+                    <div class="workouts-list">
+                `;
+
+                weekPlan.workouts.forEach(workout => {
+                    weekHTML += `
+                        <div class="workout-item">
+                            <strong>${workout.day}:</strong> ${workout.type}<br>
+                            <span style="color: var(--muted); font-size: 0.9em;">${workout.details}</span>
+                        </div>
+                    `;
+                });
+
+                weekHTML += `</div>`;
+
+                if (weekPlan._adjustment) {
+                    weekHTML += `
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(243, 156, 18, 0.1); border-radius: 6px; font-size: 0.9em; color: #7d4e00;">
+                            <strong>Plan adjusted:</strong> ${weekPlan._adjustment.reason}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = weekHTML;
+                container.appendChild(card);
+            }
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'progress') {
+                updateProgress();
+            }
+        }
+
+        // Run logger
+        document.getElementById('runForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const run = {
+                date: document.getElementById('runDate').value,
+                type: document.getElementById('runType').value,
+                duration: parseInt(document.getElementById('runDuration').value),
+                feeling: parseInt(document.getElementById('runFeeling').value),
+                notes: document.getElementById('runNotes').value
+            };
+
+            if (!run.feeling) {
+                alert('Please rate how you felt!');
+                return;
+            }
+
+            appState.runs.push(run);
+            appState.runs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            saveState();
+
+            document.getElementById('runForm').reset();
+            document.getElementById('runDate').valueAsDate = new Date();
+            renderRunsLog();
+
+            alert('✓ Run logged!');
+        });
+
+        function setRating(rating) {
+            document.getElementById('runFeeling').value = rating;
+            document.querySelectorAll('#runForm .rating-btn').forEach((btn, i) => {
+                btn.classList.toggle('selected', i + 1 === rating);
+            });
+        }
+
+        function setCheckInDifficulty(rating) {
+            document.getElementById('checkInDifficulty').value = rating;
+            document.querySelectorAll('#checkInForm .rating-btn').forEach((btn, i) => {
+                btn.classList.toggle('selected', i + 1 === rating);
+            });
+        }
+
+        function renderRunsLog() {
+            const container = document.getElementById('runsLog');
+
+            if (appState.runs.length === 0) {
+                container.innerHTML = '<div class="no-data">No runs logged yet. Get started! 🏃</div>';
+                return;
+            }
+
+            container.innerHTML = appState.runs.map(run => `
+                <div class="run-entry">
+                    <div class="run-info">
+                        <div class="run-date">${new Date(run.date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</div>
+                        <div class="run-details"><strong>${run.type}</strong> • ${run.duration} min</div>
+                        <div class="run-details">Feeling: ${'⭐'.repeat(run.feeling)}</div>
+                        ${run.notes ? `<div class="run-notes">"${run.notes}"</div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Weekly check-in
+        document.getElementById('checkInForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const week = parseInt(document.getElementById('checkInWeek').value);
+            const difficulty = parseInt(document.getElementById('checkInDifficulty').value);
+
+            if (!difficulty) {
+                alert('Please rate the difficulty!');
+                return;
+            }
+
+            const checkIn = {
+                week,
+                completionRate: document.querySelector('input[name="completionRate"]:checked').value,
+                difficulty,
+                issues: document.getElementById('checkInIssues').value,
+                feedback: document.getElementById('checkInFeedback').value,
+                date: new Date().toISOString()
+            };
+
+            appState.checkIns.push(checkIn);
+            appState.currentWeek = Math.min(week + 1, 4);
+            saveState();
+
+            // Recalculate plan with adjustments
+            initializePlan();
+            renderPlan();
+
+            // Show adjustment message
+            const adjustments = calculateAdjustments();
+            const adjustmentMsg = document.getElementById('adjustmentMessage');
+
+            if (adjustments.modified) {
+                adjustmentMsg.innerHTML = `
+                    <p><strong>${adjustments.reason}</strong></p>
+                    <p style="margin-top: 15px; color: var(--muted);">Your training plan for next week has been updated based on your feedback. Keep crushing it! 💪</p>
+                `;
+            } else {
+                adjustmentMsg.innerHTML = `
+                    <p><strong>Perfect!</strong> You're on track. Keep the momentum going! 🔥</p>
+                    <p style="margin-top: 15px; color: var(--muted);">Your plan remains as scheduled. See you next week!</p>
+                `;
+            }
+
+            document.getElementById('adjustmentModal').classList.add('active');
+            document.getElementById('checkInForm').reset();
+        });
+
+        function closeModal() {
+            document.getElementById('adjustmentModal').classList.remove('active');
+        }
+
+        // Progress tab
+        function updateProgress() {
+            const totalRuns = appState.runs.length;
+            const totalMinutes = appState.runs.reduce((sum, r) => sum + r.duration, 0);
+            const avgFeeling = totalRuns > 0
+                ? (appState.runs.reduce((sum, r) => sum + r.feeling, 0) / totalRuns).toFixed(1)
+                : 0;
+
+            document.getElementById('totalRuns').textContent = totalRuns;
+            document.getElementById('totalTime').textContent = Math.floor(totalMinutes / 60) + 'h ' + (totalMinutes % 60) + 'm';
+            document.getElementById('avgFeeling').textContent = avgFeeling > 0 ? avgFeeling : '—';
+            document.getElementById('currentWeek').textContent = appState.currentWeek;
+
+            // Run breakdown
+            const breakdown = {};
+            appState.runs.forEach(run => {
+                breakdown[run.type] = (breakdown[run.type] || 0) + run.duration;
+            });
+
+            let detailsHTML = '';
+            if (Object.keys(breakdown).length > 0) {
+                detailsHTML = Object.entries(breakdown)
+                    .map(([type, minutes]) => `
+                        <div style="margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>${type}</span>
+                                <span style="font-weight: 600; color: var(--primary);">${minutes} min</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(minutes / Math.max(...Object.values(breakdown))) * 100}%"></div>
+                            </div>
+                        </div>
+                    `).join('');
+            } else {
+                detailsHTML = '<p style="color: var(--muted);">No runs logged yet. Start your first run and track your progress here!</p>';
+            }
+
+            document.getElementById('progressDetails').innerHTML = detailsHTML;
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            renderPlan();
+            renderRunsLog();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('runDate').value = today;
+        });
+
+        // Set today's date by default in check-in
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('runDate').value = today;
+        });
+    </script>
+</body>
+</html>
